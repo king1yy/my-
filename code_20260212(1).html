@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>妹妹的寒假计划与抽奖系统</title>
+<style>
+  body{font-family:Microsoft YaHei;background:#f7f8fa;margin:0;padding:15px;}
+  .container{max-width:800px;margin:0 auto;background:#fff;border-radius:12px;padding:20px;box-shadow:0 2px 10px rgba(0,0,0,0.05);}
+  h1{text-align:center;font-size:20px;color:#333;margin-bottom:20px;}
+  .top-bar{display:flex;justify-content:space-between;background:#e8f5e9;padding:10px;border-radius:8px;margin-bottom:20px;font-size:14px;color:#2e7d32;}
+  .section{margin-bottom:25px;}
+  .section-title{font-size:16px;font-weight:bold;color:#333;border-bottom:1px solid #4caf50;padding-bottom:8px;margin-bottom:12px;}
+  .task-item{display:flex;align-items:center;margin:8px 0;font-size:14px;}
+  .task-item input{margin-right:10px;}
+  .task-text{flex:1;}
+  .reward{color:#2e7d32;margin-left:8px;}
+  .penalty{color:#d32f2f;margin-left:8px;}
+  .btn{width:100%;padding:12px;border:none;border-radius:8px;margin:10px 0;font-size:16px;background:#4285f4;color:#fff;}
+  .btn-orange{background:#ff9800;}
+  .btn-purple{background:#9c27b0;}
+  .money-bar{display:flex;justify-content:space-between;margin:10px 0;font-size:15px;}
+  .green{color:#2e7d32;}
+  .red{color:#d32f2f;}
+  .record{background:#f9f9f9;padding:10px;border-radius:8px;margin:10px 0;font-size:13px;max-height:200px;overflow:auto;}
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>妹妹的寒假计划与抽奖系统 🎉</h1>
+
+  <div class="top-bar">
+    <span>今日抽奖次数: <span id="c">0</span> 次</span>
+    <span>今日罚款: ¥<span id="tf">0</span></span>
+    <span>累计罚款: ¥<span id="tof">0</span></span>
+  </div>
+
+  <div class="section">
+    <div class="section-title">每日必做任务</div>
+    <div class="task-item">
+      <input type="checkbox" id="t1" onchange="toggleTask('t1',1)">
+      <label for="t1" class="task-text">6:30起床，叠被子/保持房间整洁（2天一次）</label>
+      <span class="penalty">罚款:¥10/¥20</span>
+    </div>
+    <div class="task-item">
+      <input type="checkbox" id="t2" onchange="toggleTask('t2',1)">
+      <label for="t2" class="task-text">完成3个视频运动</label>
+      <span class="reward">奖励: 1次</span>
+      <span class="penalty">罚款:¥50</span>
+    </div>
+    <div class="task-item">
+      <input type="checkbox" id="t3" onchange="toggleTask('t3',1)">
+      <label for="t3" class="task-text">8:30前到图书馆</label>
+      <span class="reward">奖励: 1次</span>
+      <span class="penalty">罚款:¥20/¥50</span>
+    </div>
+    <div class="task-item">
+      <input type="checkbox" id="t4" onchange="toggleTask('t4',3)">
+      <label for="t4" class="task-text">上一节赵礼显数学（3h）</label>
+      <span class="reward">奖励: 3次</span>
+      <span class="penalty">罚款:¥50</span>
+    </div>
+    <div class="task-item">
+      <input type="checkbox" id="t5" onchange="toggleTask('t5',1)">
+      <label for="t5" class="task-text">数学刷一面题</label>
+      <span class="reward">奖励: 1次</span>
+      <span class="penalty">罚款:¥50</span>
+    </div>
+    <div class="task-item">
+      <input type="checkbox" id="t6" onchange="toggleTask('t6',2)">
+      <label for="t6" class="task-text">日语背10单词+2句子并默写</label>
+      <span class="reward">奖励: 2次</span>
+      <span class="penalty">罚款:¥30</span>
+    </div>
+    <div class="task-item">
+      <input type="checkbox" id="t7" onchange="toggleTask('t7',0)">
+      <label for="t7" class="task-text">上一节化学课（连续3次兑换1次）</label>
+      <span class="penalty">罚款:¥10</span>
+    </div>
+    <div class="task-item">
+      <input type="checkbox" id="t8" onchange="toggleTask('t8',0)">
+      <label for="t8" class="task-text">练字半页（2天一次）</label>
+      <span class="penalty">罚款:¥10</span>
+    </div>
+    <div class="task-item">
+      <input type="checkbox" id="t9" onchange="toggleTask('t9',1)">
+      <label for="t9" class="task-text">上语文课40分钟</label>
+      <span class="reward">奖励: 1次</span>
+      <span class="penalty">罚款:¥20</span>
+    </div>
+    <div class="task-item">
+      <input type="checkbox" id="t10" onchange="toggleTask('t10',2)">
+      <label for="t10" class="task-text">两天上3节物理课</label>
+      <span class="reward">奖励: 2次</span>
+      <span class="penalty">罚款:¥50</span>
+    </div>
+    <div class="task-item">
+      <input type="checkbox" id="t11" onchange="toggleTask('t11',2)">
+      <label for="t11" class="task-text">6:30-学习完前不使用娱乐软件</label>
+      <span class="reward">奖励: 2次</span>
+      <span class="penalty">罚款:¥50</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">不定性任务（完成必做后再做）</div>
+    <div class="task-item">
+      <input type="checkbox" id="o1" onchange="toggleTask('o1',2)">
+      <label for="o1" class="task-text">物理课3节（兑换2次）</label>
+      <span class="reward">奖励: 2次</span>
+    </div>
+    <div class="task-item">
+      <input type="checkbox" id="o2" onchange="toggleTask('o2',1)">
+      <label for="o2" class="task-text">物理题一页</label>
+      <span class="reward">奖励: 1次</span>
+    </div>
+    <div class="task-item">
+      <input type="checkbox" id="o3" onchange="toggleTask('o3',1)">
+      <label for="o3" class="task-text">素材背诵一个</label>
+      <span class="reward">奖励: 1次</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <button class="btn" onclick="draw()">🎁 开始抽奖</button>
+    <div class="money-bar">
+      <span class="green">今日获得: ¥<span id="te">0</span></span>
+      <span>累计获得: ¥<span id="toe">0</span></span>
+    </div>
+    <button class="btn btn-purple" onclick="setF()">✏️ 修改累计罚款</button>
+    <button class="btn btn-purple" onclick="setE()">✏️ 修改累计获得</button>
+    <button class="btn btn-orange" onclick="todayReset()">🔄 重置今日数据</button>
+  </div>
+
+  <div class="section">
+    <div class="section-title">抽奖记录</div>
+    <div class="record" id="log"></div>
+  </div>
+</div>
+
+<script>
+let c=0, te=0, tf=0, toe=0, tof=0
+let log=[]
+let taskState = {}
+
+const gifts = [
+  {n:"谢谢惠顾",v:0},
+  {n:"5元",v:5},
+  {n:"10元",v:10},
+  {n:"15元",v:15},
+  {n:"20元",v:20},
+  {n:"免罚10元×3",v:10},
+  {n:"姑玩碎片×2",v:0},
+  {n:"电影碎片×1",v:0},
+  {n:"一只羽毛球×2",v:0},
+  {n:"可借100",v:100},
+  {n:"果茶×1",v:0},
+  {n:"出去玩碎片×1",v:0}
+]
+
+function up(){
+  document.getElementById('c').innerText = c
+  document.getElementById('te').innerText = te
+  document.getElementById('tf').innerText = tf
+  document.getElementById('toe').innerText = toe
+  document.getElementById('tof').innerText = tof
+  document.getElementById('log').innerText = log.join('\n')
+}
+
+function toggleTask(id, reward){
+  const cb = document.getElementById(id)
+  if(cb.checked){
+    c += reward
+    log.push('✅ '+time()+' 完成任务: '+cb.parentElement.querySelector('.task-text').textContent)
+  }else{
+    c -= reward
+    log.push('❌ '+time()+' 取消任务: '+cb.parentElement.querySelector('.task-text').textContent)
+  }
+  up()
+}
+
+function draw(){
+  if(c<1){alert('没有抽奖次数了！');return}
+  c--
+  const g = gifts[Math.floor(Math.random()*gifts.length)]
+  if(g.v>0){
+    te += g.v
+    toe += g.v
+  }
+  log.push('🎁 '+time()+' 抽中: '+g.n)
+  up()
+}
+
+function todayReset(){
+  c=0; te=0; tf=0; log=[]
+  document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false)
+  up()
+}
+
+function setF(){
+  const v = prompt('请输入新的累计罚款：', tof)
+  if(v!==null && !isNaN(v)) tof = Number(v)
+  up()
+}
+
+function setE(){
+  const v = prompt('请输入新的累计获得：', toe)
+  if(v!==null && !isNaN(v)) toe = Number(v)
+  up()
+}
+
+function time(){
+  const d = new Date()
+  return `${d.getMonth()+1}-${d.getDate()} ${d.getHours()}:${String(d.getMinutes()).padStart(2,'0')}`
+}
+</script>
+</body>
+</html>
