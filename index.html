@@ -1,236 +1,144 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>寒假计划</title>
-<style>
-  body{font-family:Microsoft YaHei;background:#f7f8fa;margin:0;padding:15px;}
-  .container{max-width:800px;margin:0 auto;background:#fff;border-radius:12px;padding:20px;box-shadow:0 2px 10px rgba(0,0,0,0.05);}
-  h1{text-align:center;font-size:20px;color:#333;margin-bottom:20px;}
-  .top-bar{display:flex;justify-content:space-between;background:#e8f5e9;padding:10px;border-radius:8px;margin-bottom:20px;font-size:14px;color:#2e7d32;}
-  .section{margin-bottom:25px;}
-  .section-title{font-size:16px;font-weight:bold;color:#333;border-bottom:1px solid #4caf50;padding-bottom:8px;margin-bottom:12px;}
-  .task-item{display:flex;align-items:center;margin:8px 0;font-size:14px;}
-  .task-item input{margin-right:10px;}
-  .task-text{flex:1;}
-  .reward{color:#2e7d32;margin-left:8px;}
-  .penalty{color:#d32f2f;margin-left:8px;}
-  .btn{width:100%;padding:12px;border:none;border-radius:8px;margin:10px 0;font-size:16px;background:#4285f4;color:#fff;}
-  .btn-orange{background:#ff9800;}
-  .btn-purple{background:#9c27b0;}
-  .money-bar{display:flex;justify-content:space-between;margin:10px 0;font-size:15px;}
-  .green{color:#2e7d32;}
-  .red{color:#d32f2f;}
-  .record{background:#f9f9f9;padding:10px;border-radius:8px;margin:10px 0;font-size:13px;max-height:200px;overflow:auto;}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>寒假逆袭计划</title>
+  <style>
+    * {box-sizing: border-box; margin: 0; padding: 0;}
+    body {font-family: "Microsoft YaHei", sans-serif; background: #f7f8fa; padding: 15px;}
+    .container {max-width: 100%; background: #fff; border-radius: 12px; padding: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);}
+    h1 {text-align: center; font-size: 18px; color: #333; margin-bottom: 15px;}
+    .top-bar {display: flex; flex-wrap: wrap; justify-content: space-between; background: #e8f5e9; padding: 10px; border-radius: 8px; margin-bottom: 15px; font-size: 13px; color: #2e7d32;}
+    .section {margin-bottom: 20px;}
+    .section-title {font-size: 15px; font-weight: bold; color: #333; border-bottom: 1px solid #4caf50; padding-bottom: 8px; margin-bottom: 10px;}
+    .task-item {display: flex; align-items: flex-start; margin: 8px 0; font-size: 13px;}
+    .task-item input {margin-right: 8px; margin-top: 2px;}
+    .task-text {flex: 1;}
+    .reward {color: #2e7d32; font-size: 12px; margin-left: 5px;}
+    .penalty {color: #d32f2f; font-size: 12px; margin-left: 5px;}
+    .btn {width: 100%; padding: 12px; border: none; border-radius: 8px; margin: 10px 0; font-size: 16px; cursor: pointer;}
+    .btn-orange {background: #ff9800; color: #fff;}
+    .btn-purple {background: #9c27b0; color: #fff;}
+    .btn-green {background: #4caf50; color: #fff;}
+    .btn-red {background: #f44336; color: #fff;}
+    .record {background: #f9f9f9; padding: 10px; border-radius: 8px; margin: 10px 0; font-size: 12px; max-height: 150px; overflow-y: auto;}
+    .pool-remain {background: #fff3e0; padding: 10px; border-radius: 8px; margin: 10px 0; font-size: 12px; max-height: 150px; overflow-y: auto; color: #ef6c00;}
+    .lottery-modal {position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; justify-content: center; align-items: center; z-index: 999;}
+    .lottery-content {background: #fff; padding: 20px; border-radius: 12px; text-align: center; width: 90%; max-width: 320px;}
+    .lottery-wheel {width: 200px; height: 200px; border-radius: 50%; margin: 0 auto 20px; position: relative; overflow: hidden; border: 8px solid #4caf50;}
+    .wheel-item {position: absolute; width: 50%; height: 50%; transform-origin: bottom right; display: flex; justify-content: center; align-items: flex-start; padding-top: 15px; font-size: 10px; font-weight: bold; color: #fff;}
+    .lottery-pointer {width: 0; height: 0; border-left: 15px solid transparent; border-right: 15px solid transparent; border-bottom: 30px solid #ff9800; margin: 0 auto; position: relative; top: -10px; z-index: 10;}
+    .lottery-result {font-size: 16px; font-weight: bold; margin: 20px 0; color: #e91e63;}
+  </style>
 </head>
 <body>
 <div class="container">
-  <h1>寒假逆袭 🎉</h1>
-
+  <h1>寒假逆袭计划 🎯</h1>
   <div class="top-bar">
-    <span>今日抽奖次数: <span id="c">0</span> 次</span>
-    <span>今日罚款: ¥<span id="tf">0</span></span>
-    <span>累计罚款: ¥<span id="tof">0</span></span>
+    <span>抽奖次数：<span id="c">0</span> 次</span>
+    <span>今日罚款：¥<span id="tf">0</span></span>
+    <span>今日获得：¥<span id="tg">0</span></span>
+    <span>累计罚款：¥<span id="tof">0</span></span>
+    <span>累计获得：¥<span id="tog">0</span></span>
   </div>
 
   <div class="section">
     <div class="section-title">每日必做任务</div>
-    <div class="task-item">
-      <input type="checkbox" id="t1" onchange="toggleTask('t1',1)">
-      <label for="t1" class="task-text">6:30起床，叠被子/保持房间整洁（2天一次）</label>
-      <span class="penalty">罚款:¥10/¥20</span>
-    </div>
-    <div class="task-item">
-      <input type="checkbox" id="t2" onchange="toggleTask('t2',1)">
-      <label for="t2" class="task-text">完成3个视频运动</label>
-      <span class="reward">奖励: 1次</span>
-      <span class="penalty">罚款:¥50</span>
-    </div>
-    <div class="task-item">
-      <input type="checkbox" id="t3" onchange="toggleTask('t3',1)">
-      <label for="t3" class="task-text">8:30前到图书馆</label>
-      <span class="reward">奖励: 1次</span>
-      <span class="penalty">罚款:¥20/¥50</span>
-    </div>
-    <div class="task-item">
-      <input type="checkbox" id="t4" onchange="toggleTask('t4',3)">
-      <label for="t4" class="task-text">上一节赵礼显数学（3h）</label>
-      <span class="reward">奖励: 3次</span>
-      <span class="penalty">罚款:¥50</span>
-    </div>
-    <div class="task-item">
-      <input type="checkbox" id="t5" onchange="toggleTask('t5',1)">
-      <label for="t5" class="task-text">数学刷一面题</label>
-      <span class="reward">奖励: 1次</span>
-      <span class="penalty">罚款:¥50</span>
-    </div>
-    <div class="task-item">
-      <input type="checkbox" id="t6" onchange="toggleTask('t6',2)">
-      <label for="t6" class="task-text">日语背10单词+2句子并默写</label>
-      <span class="reward">奖励: 2次</span>
-      <span class="penalty">罚款:¥30</span>
-    </div>
-    <div class="task-item">
-      <input type="checkbox" id="t7" onchange="toggleTask('t7',0)">
-      <label for="t7" class="task-text">上一节化学课（连续3次兑换1次）</label>
-      <span class="penalty">罚款:¥10</span>
-    </div>
-    <div class="task-item">
-      <input type="checkbox" id="t8" onchange="toggleTask('t8',0)">
-      <label for="t8" class="task-text">练字半页（2天一次）</label>
-      <span class="penalty">罚款:¥10</span>
-    </div>
-    <div class="task-item">
-      <input type="checkbox" id="t9" onchange="toggleTask('t9',1)">
-      <label for="t9" class="task-text">上语文课40分钟</label>
-      <span class="reward">奖励: 1次</span>
-      <span class="penalty">罚款:¥20</span>
-    </div>
-    <div class="task-item">
-      <input type="checkbox" id="t10" onchange="toggleTask('t10',2)">
-      <label for="t10" class="task-text">两天上3节物理课</label>
-      <span class="reward">奖励: 2次</span>
-      <span class="penalty">罚款:¥50</span>
-    </div>
-    <div class="task-item">
-      <input type="checkbox" id="t11" onchange="toggleTask('t11',2)">
-      <label for="t11" class="task-text">6:30-学习完前不使用娱乐软件</label>
-      <span class="reward">奖励: 2次</span>
-      <span class="penalty">罚款:¥50</span>
-    </div>
+    <div class="task-item"><input type="checkbox" id="t1" onchange="toggleTask('t1',0,10)"><label for="t1" class="task-text">6:30起床，叠被子（2天一次）</label><span class="penalty">罚款：¥10</span></div>
+    <div class="task-item"><input type="checkbox" id="t2" onchange="toggleTask('t2',0,20)"><label for="t2" class="task-text">保持房间干净整洁（2天一次）</label><span class="penalty">罚款：¥20</span></div>
+    <div class="task-item"><input type="checkbox" id="t3" onchange="toggleTask('t3',1,50)"><label for="t3" class="task-text">完成3个视频运动</label><span class="reward">奖励：1次</span><span class="penalty">罚款：¥50</span></div>
+    <div class="task-item"><input type="checkbox" id="t4" onchange="toggleTask('t4',1,20)"><label for="t4" class="task-text">8:30前到图书馆</label><span class="reward">奖励：1次</span></div>
+    <div class="task-item"><input type="checkbox" id="t5" onchange="toggleTask('t5',3,50)"><label for="t5" class="task-text">上一节赵礼显数学（3h）</label><span class="reward">奖励：3次</span><span class="penalty">罚款：¥50</span></div>
+    <div class="task-item"><input type="checkbox" id="t6" onchange="toggleTask('t6',1,50)"><label for="t6" class="task-text">数学刷一面题</label><span class="reward">奖励：1次</span><span class="penalty">罚款：¥50</span></div>
+    <div class="task-item"><input type="checkbox" id="t7" onchange="toggleTask('t7',2,30)"><label for="t7" class="task-text">日语背10词+2句默写</label><span class="reward">奖励：2次</span><span class="penalty">罚款：¥30</span></div>
+    <div class="task-item"><input type="checkbox" id="t8" onchange="toggleTask('t8',0,10)"><label for="t8" class="task-text">语文积累好句（3天一次）</label><span class="penalty">罚款：¥10</span></div>
+    <div class="task-item"><input type="checkbox" id="t9" onchange="toggleTask('t9',0,10)"><label for="t9" class="task-text">化学上一节</label><span class="penalty">罚款：¥10</span></div>
+    <div class="task-item"><input type="checkbox" id="t10" onchange="toggleTask('t10',0,10)"><label for="t10" class="task-text">练字半页（2天一次）</label><span class="penalty">罚款：¥10</span></div>
+    <div class="task-item"><input type="checkbox" id="t11" onchange="toggleTask('t11',1,20)"><label for="t11" class="task-text">上40分钟语文课</label><span class="reward">奖励：1次</span><span class="penalty">罚款：¥20</span></div>
+    <div class="task-item"><input type="checkbox" id="t12" onchange="toggleTask('t12',2,50)"><label for="t12" class="task-text">两天上3节物理课</label><span class="reward">奖励：2次</span><span class="penalty">罚款：¥50</span></div>
+    <div class="task-item"><input type="checkbox" id="t13" onchange="toggleTask('t13',2,50)"><label for="t13" class="task-text">学习前不刷娱乐软件</label><span class="reward">奖励：2次</span><span class="penalty">罚款：¥50</span></div>
   </div>
 
-  <div class="section">
-    <div class="section-title">不定性任务（完成必做后再做）</div>
-    <div class="task-item">
-      <input type="checkbox" id="o1" onchange="toggleTask('o1',2)">
-      <label for="o1" class="task-text">物理课3节（兑换2次）</label>
-      <span class="reward">奖励: 2次</span>
-    </div>
-    <div class="task-item">
-      <input type="checkbox" id="o2" onchange="toggleTask('o2',1)">
-      <label for="o2" class="task-text">物理题一页</label>
-      <span class="reward">奖励: 1次</span>
-    </div>
-    <div class="task-item">
-      <input type="checkbox" id="o3" onchange="toggleTask('o3',1)">
-      <label for="o3" class="task-text">素材背诵一个</label>
-      <span class="reward">奖励: 1次</span>
-    </div>
-  </div>
+  <button class="btn btn-orange" onclick="startLottery()" disabled id="lotteryBtn">点击抽奖</button>
+  <button class="btn btn-green" onclick="resetPool()">重置奖池</button>
+  <button class="btn btn-red" onclick="resetToday()">重置今日数据</button>
 
-  <div class="section">
-    <button class="btn" onclick="draw()">🎁 开始抽奖</button>
-    <div class="money-bar">
-      <span class="green">今日获得: ¥<span id="te">0</span></span>
-      <span>累计获得: ¥<span id="toe">0</span></span>
-    </div>
-    <button class="btn btn-purple" onclick="setF()">✏️ 修改累计罚款</button>
-    <button class="btn btn-purple" onclick="setE()">✏️ 修改累计获得</button>
-    <button class="btn btn-orange" onclick="todayReset()">🔄 重置今日数据</button>
-  </div>
+  <div class="pool-remain" id="poolRemain">奖池剩余：</div>
+  <div class="record" id="record">抽奖记录：</div>
 
-  <div class="section">
-    <div class="section-title">抽奖记录</div>
-    <div class="record" id="log"></div>
+  <div class="lottery-modal" id="lotteryModal">
+    <div class="lottery-content">
+      <div class="lottery-pointer"></div>
+      <div class="lottery-wheel" id="lotteryWheel"></div>
+      <div class="lottery-result" id="lotteryResult"></div>
+      <button class="btn btn-purple" onclick="closeModal()">确定</button>
+    </div>
   </div>
 </div>
 
 <script>
-let c=0, te=0, tf=0, toe=0, tof=0
-let log=[]
-let taskState = {}
+let c = 0,tf = 0,tg = 0,tof = 0,tog = 0;
+let tasks = {},record = [],currentPool = [];
 
-const gifts = [
-  // 5个谢谢惠顾
-  {name:"谢谢惠顾",value:0},
-  {name:"谢谢惠顾",value:0},
-  {name:"谢谢惠顾",value:0},
-  {name:"谢谢惠顾",value:0},
-  {name:"谢谢惠顾",value:0},
-  // 2个5元
-  {name:"5元",value:5},
-  {name:"5元",value:5},
-  // 2个10元
-  {name:"10元",value:10},
-  {name:"10元",value:10},
-  // 1个15元
-  {name:"15元",value:15},
-  // 1个20元
-  {name:"20元",value:20},
-  // 免罚10元×3
+const originalPool = [
+  {name:"谢谢惠顾",value:0},{name:"谢谢惠顾",value:0},{name:"谢谢惠顾",value:0},{name:"谢谢惠顾",value:0},{name:"谢谢惠顾",value:0},
+  {name:"5元",value:5},{name:"5元",value:5},
+  {name:"10元",value:10},{name:"10元",value:10},
+  {name:"15元",value:15},{name:"20元",value:20},
   {name:"免罚10元×3",value:10},
-  // 姑玩碎片×2
-  {name:"姑玩碎片×2",value:0},
-  // 电影碎片×1
-  {name:"电影碎片×1",value:0},
-  // 一只羽毛球×2
-  {name:"一只羽毛球×2",value:0},
-  // 可借100×1
-  {name:"可借100×1",value:100},
-  // 果茶×1
-  {name:"果茶×1",value:0},
-  // 放假最后一天出去玩碎片×1
-  {name:"出去玩碎片×1",value:0}
+  {name:"姑玩碎片×2",value:0},{name:"电影碎片×1",value:0},
+  {name:"一只羽毛球×2",value:0},{name:"可借100×1",value:100},
+  {name:"果茶×1",value:0},{name:"出去玩碎片×1",value:0}
 ];
 
-function up(){
-  document.getElementById('c').innerText = c
-  document.getElementById('te').innerText = te
-  document.getElementById('tf').innerText = tf
-  document.getElementById('toe').innerText = toe
-  document.getElementById('tof').innerText = tof
-  document.getElementById('log').innerText = log.join('\n')
+function init(){loadData();if(currentPool.length===0)resetPool();renderUI();initLotteryWheel();}
+function loadData(){const d=JSON.parse(localStorage.getItem('nixiPlanData')||'{}');c=d.c||0;tf=d.tf||0;tg=d.tg||0;tof=d.tof||0;tog=d.tog||0;tasks=d.tasks||{};record=d.record||[];currentPool=d.currentPool||[];}
+function saveData(){localStorage.setItem('nixiPlanData',JSON.stringify({c,tf,tg,tof,tog,tasks,record,currentPool}));}
+
+function renderUI(){
+  document.getElementById('c').innerText=c;
+  document.getElementById('tf').innerText=tf;
+  document.getElementById('tg').innerText=tg;
+  document.getElementById('tof').innerText=tof;
+  document.getElementById('tog').innerText=tog;
+  Object.keys(tasks).forEach(k=>{const e=document.getElementById(k);if(e)e.checked=tasks[k];});
+  const b=document.getElementById('lotteryBtn');
+  b.disabled=c<=0||currentPool.length===0;
+  b.innerText=`抽奖（剩${c}次｜池${currentPool.length}件）`;
+  document.getElementById('record').innerText=`记录：\n${record.join('\n')}`;
+  
+  // 显示剩余奖品
+  const rem=document.getElementById('poolRemain');
+  rem.innerText=`奖池剩余（共${currentPool.length}件）：\n`+currentPool.map(i=>i.name).join(' | ');
 }
 
-function toggleTask(id, reward){
-  const cb = document.getElementById(id)
-  if(cb.checked){
-    c += reward
-    log.push('✅ '+time()+' 完成任务: '+cb.parentElement.querySelector('.task-text').textContent)
-  }else{
-    c -= reward
-    log.push('❌ '+time()+' 取消任务: '+cb.parentElement.querySelector('.task-text').textContent)
-  }
-  up()
+function toggleTask(tid,rew,pen){const ok=!tasks[tid];tasks[tid]=ok;ok?(c+=rew):(tf+=pen,tof+=pen);saveData();renderUI();}
+function resetPool(){currentPool=[...originalPool];saveData();renderUI();initLotteryWheel();alert('奖池已重置');}
+function resetToday(){if(confirm('重置今日？累计不变')){tf=0;tg=0;saveData();renderUI();alert('今日已重置');}}
+
+function startLottery(){
+  if(c<=0||currentPool.length===0)return;c--;
+  const m=document.getElementById('lotteryModal');
+  const w=document.getElementById('lotteryWheel');
+  const r=document.getElementById('lotteryResult');
+  m.style.display='flex';
+  const i=Math.floor(Math.random()*currentPool.length);
+  const g=currentPool.splice(i,1)[0];
+  w.style.transition='transform 3s';
+  w.style.transform=`rotate(${360*5+(360/originalPool.length)*i}deg)`;
+  setTimeout(()=>{
+    r.innerText=`抽中：${g.name}`;
+    if(g.value>0){tf=Math.max(tf-g.value,0);tg+=g.value;tog+=g.value;}
+    record.unshift(`[${new Date().toLocaleTimeString()}] ${g.name}`);
+    record=record.slice(0,10);saveData();renderUI();initLotteryWheel();
+  },3000);
 }
 
-function draw(){
-  if(c<1){alert('没有抽奖次数了！');return}
-  c--
-  const g = gifts[Math.floor(Math.random()*gifts.length)]
-  if(g.v>0){
-    te += g.v
-    toe += g.v
-  }
-  log.push('🎁 '+time()+' 抽中: '+g.n)
-  up()
-}
+function closeModal(){document.getElementById('lotteryModal').style.display='none';const w=document.getElementById('lotteryWheel');w.style.transition='none';w.style.transform='rotate(0deg)';}
+function initLotteryWheel(){const w=document.getElementById('lotteryWheel');w.innerHTML='';const a=360/originalPool.length;originalPool.forEach((g,i)=>{const d=document.createElement('div');d.className='wheel-item';d.style.transform=`rotate(${i*a}deg) skewY(${a-90}deg)`;d.style.background=i%2?'#2196f3':'#4caf50';d.innerText=g.name;w.appendChild(d);});}
 
-function todayReset(){
-  c=0; te=0; tf=0; log=[]
-  document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false)
-  up()
-}
-
-function setF(){
-  const v = prompt('请输入新的累计罚款：', tof)
-  if(v!==null && !isNaN(v)) tof = Number(v)
-  up()
-}
-
-function setE(){
-  const v = prompt('请输入新的累计获得：', toe)
-  if(v!==null && !isNaN(v)) toe = Number(v)
-  up()
-}
-
-function time(){
-  const d = new Date()
-  return `${d.getMonth()+1}-${d.getDate()} ${d.getHours()}:${String(d.getMinutes()).padStart(2,'0')}`
-}
+window.onload=init;
 </script>
 </body>
 </html>
