@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>妹妹的寒假计划与抽奖系统</title>
+<title>寒假计划</title>
 <style>
   body{font-family:Microsoft YaHei;background:#f7f8fa;margin:0;padding:15px;}
   .container{max-width:800px;margin:0 auto;background:#fff;border-radius:12px;padding:20px;box-shadow:0 2px 10px rgba(0,0,0,0.05);}
@@ -27,7 +27,7 @@
 </head>
 <body>
 <div class="container">
-  <h1>妹妹的寒假计划与抽奖系统 🎉</h1>
+  <h1>寒假逆袭 🎉</h1>
 
   <div class="top-bar">
     <span>今日抽奖次数: <span id="c">0</span> 次</span>
@@ -144,19 +144,37 @@ let log=[]
 let taskState = {}
 
 const gifts = [
-  {n:"谢谢惠顾",v:0},
-  {n:"5元",v:5},
-  {n:"10元",v:10},
-  {n:"15元",v:15},
-  {n:"20元",v:20},
-  {n:"免罚10元×3",v:10},
-  {n:"姑玩碎片×2",v:0},
-  {n:"电影碎片×1",v:0},
-  {n:"一只羽毛球×2",v:0},
-  {n:"可借100",v:100},
-  {n:"果茶×1",v:0},
-  {n:"出去玩碎片×1",v:0}
-]
+  // 5个谢谢惠顾
+  {name:"谢谢惠顾",value:0},
+  {name:"谢谢惠顾",value:0},
+  {name:"谢谢惠顾",value:0},
+  {name:"谢谢惠顾",value:0},
+  {name:"谢谢惠顾",value:0},
+  // 2个5元
+  {name:"5元",value:5},
+  {name:"5元",value:5},
+  // 2个10元
+  {name:"10元",value:10},
+  {name:"10元",value:10},
+  // 1个15元
+  {name:"15元",value:15},
+  // 1个20元
+  {name:"20元",value:20},
+  // 免罚10元×3
+  {name:"免罚10元×3",value:10},
+  // 姑玩碎片×2
+  {name:"姑玩碎片×2",value:0},
+  // 电影碎片×1
+  {name:"电影碎片×1",value:0},
+  // 一只羽毛球×2
+  {name:"一只羽毛球×2",value:0},
+  // 可借100×1
+  {name:"可借100×1",value:100},
+  // 果茶×1
+  {name:"果茶×1",value:0},
+  // 放假最后一天出去玩碎片×1
+  {name:"出去玩碎片×1",value:0}
+];
 
 function up(){
   document.getElementById('c').innerText = c
